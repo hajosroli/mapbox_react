@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 import useRoutes from '../../Hooks/useRoutes';
+import { useMarkers } from '../../Hooks/useMarkers';
 import useMapContext, { MapContext } from '../../Context/useMapContext';
 import "./Map.css"
 mapboxgl.accessToken = process.env.REACT_APP_ACCESS_TOKEN;
@@ -8,16 +9,17 @@ mapboxgl.accessToken = process.env.REACT_APP_ACCESS_TOKEN;
 export default function Map() {
   const mapContainer = useRef(null);
   const map = useRef(null);
-  //Initial coordinates of Veszprém
+  // Initial coordinates of Veszprém
   const [lng, setLng] = useState(17.9156);
   const [lat, setLat] = useState(47.0934);
   const [zoom, setZoom] = useState(12);
-  const {markersObj, setMarkersObj, mapProvider} = useMapContext();
-  const {routeInfo, routeCoord} = useRoutes()
- 
-  console.log(routeInfo)
-  console.log(routeCoord)
-  console.log(markersObj)
+  const {markersObj, mapProvider} = useMapContext(); // No need to use markersObj and setMarkersObj
+  const { routeInfo, routeCoord } = useRoutes();
+  const {  createMarker } = useMarkers(); // Use the custom hook
+
+  console.log(routeInfo);
+  console.log(routeCoord);
+  console.log(markersObj);
 
   useEffect(() => {
     if (map.current) return; // Initialize the map only once
@@ -28,7 +30,6 @@ export default function Map() {
       center: [lng, lat],
       zoom: zoom,
     });
-  
 
     map.current.on('move', () => {
       setLng(map.current.getCenter().lng.toFixed(4));
@@ -38,32 +39,16 @@ export default function Map() {
 
     map.current.on('click', handleMapClick);
     mapProvider(map.current);
+
     return () => {
       map.current.off('click', handleMapClick);
     };
-  }, [lng, lat, zoom]);
+  }, []);
 
   const handleMapClick = useCallback((e) => {
     const clickedLngLat = [e.lngLat.lng, e.lngLat.lat];
-    const marker = createMarker(clickedLngLat);
-    setMarkersObj((prevMarkers) => [...prevMarkers, marker]);
+    createMarker(map.current, clickedLngLat);
   }, []);
-
-  const createMarker = (lngLat) => {
-    const marker = new mapboxgl.Marker().setLngLat(lngLat).addTo(map.current);
-    const markerObj = {
-      id :  Date.now(),
-      lng : marker.getLngLat().lng.toFixed(4),
-      lat : marker.getLngLat().lat.toFixed(4)
-    }
-    marker.getElement().addEventListener('mousedown', () => handleRemoveOnMarkerClick(marker, markerObj.id));
-    return markerObj;
-  };
-
-  const handleRemoveOnMarkerClick = (marker, markerId) => {
-    marker.remove();
-    setMarkersObj((prevMarkers) => prevMarkers.filter((m) => m.id !== markerId));//!!!!
-  };
 
   return (
     <div>

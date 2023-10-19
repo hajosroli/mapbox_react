@@ -10,7 +10,6 @@ export const MapContextProvider = (props) => {
       });
       const [routeCoord, setRouteCoord] = useState([]);
       const [map, setMap] = useState(null)
-      const [markerIdCounter, setMarkerIdCounter] = useState(0);
 
     const mapProvider = (currentMap) => {
         setMap(currentMap)

@@ -64,22 +64,14 @@ const calculateRouteInfo = (routeData) => {
 
 
 export default function useRoutes() {
-  /*const [routeInfo, setRouteInfo] = useState({
-    distance: null,
-    duration: null,
-  });
-  const [routeCoord, setRouteCoord] = useState([]);*/
   const {
     routeCoord, 
     setRouteCoord, 
     routeInfo, 
     setRouteInfo,
     markersObj,
-  map} = useMapContext();
-
-  console.log(markersObj)
-  console.log(map)
- 
+    map
+  } = useMapContext();
 
   useEffect(() => {
     if (markersObj.length >= 2) {
@@ -91,9 +83,7 @@ export default function useRoutes() {
         setRouteInfo(calculateRouteInfo(routeCoordinates.legs))
         setRouteCoord(routeCoordinates);
       };
-
       updateRoute();
-
     }
   }, [markersObj]);// try without map
 
