@@ -1,11 +1,19 @@
 import React from 'react';
-import Map from './Map';
+import Map from './Components/Map/Map';
+import SideBar from './Components/SideBar/SideBar';
+
+import { MapContext, MapContextProvider } from "./Context/useMapContext";
 
 function App() {
+    
   return (
-    <div>
-      <Map />
-    </div>
+  
+    <MapContextProvider>
+      <div className='app-container'>
+        <Map />
+        <SideBar />
+      </div>
+    </MapContextProvider>
   );
 }
 

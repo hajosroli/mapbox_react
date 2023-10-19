@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import useMapContext from '../Context/useMapContext';
 
 const ACCESS_TOKEN = process.env.REACT_APP_ACCESS_TOKEN;
 const DIRECTIONS_API = `https://api.mapbox.com/directions/v5/mapbox/driving/`;
@@ -57,25 +58,33 @@ const calculateRouteInfo = (routeData) => {
         routeDistance += leg.distance;
         routeDuration += leg.duration;
     }
-    return {distance: Math.round(routeDistance),
+    return {distance: Math.round(routeDistance / 1000), // metres to km
     duration: Math.round(routeDuration / 60) }//seconds to minutes}
 }
 
 
-export default function useRoutes({ markersObj, map }) {
-  const [routeInfo, setRouteInfo] = useState({
+export default function useRoutes() {
+  /*const [routeInfo, setRouteInfo] = useState({
     distance: null,
     duration: null,
   });
-  const [routeCoord, setRouteCoord] = useState([]);
+  const [routeCoord, setRouteCoord] = useState([]);*/
+  const {
+    routeCoord, 
+    setRouteCoord, 
+    routeInfo, 
+    setRouteInfo,
+    markersObj,
+  map} = useMapContext();
 
+  console.log(markersObj)
+  console.log(map)
+ 
 
   useEffect(() => {
     if (markersObj.length >= 2) {
-      const start = [markersObj[0].lng, markersObj[0].lat];
-
+      
       const updateRoute = async () => {
-        console.log("itt")
         const coordinates = getCoordinates(markersObj);
         const routeCoordinates = await fetchRoute(coordinates);
         addRouteToMap(map, routeCoordinates.geometry.coordinates);
