@@ -61,33 +61,6 @@ const calculateRouteInfo = (routeData) => {
     duration: Math.round(routeDuration / 60) }//seconds to minutes}
 }
 
-const addMarkerToMap = (map, id, coordinates, color) => {
-  const marker = {
-    id: id,
-    type: 'circle',
-    source: {
-      type: 'geojson',
-      data: {
-        type: 'FeatureCollection',
-        features: [
-          {
-            type: 'Feature',
-            properties: {},
-            geometry: {
-              type: 'Point',
-              coordinates: coordinates,
-            },
-          },
-        ],
-      },
-    },
-    paint: {
-      'circle-radius': 10,
-      'circle-color': color,
-    },
-  };
-  map.addLayer(marker);
-};
 
 export default function useRoutes({ markersObj, map }) {
   const [routeInfo, setRouteInfo] = useState({
@@ -96,13 +69,13 @@ export default function useRoutes({ markersObj, map }) {
   });
   const [routeCoord, setRouteCoord] = useState([]);
 
-  
 
   useEffect(() => {
     if (markersObj.length >= 2) {
       const start = [markersObj[0].lng, markersObj[0].lat];
 
       const updateRoute = async () => {
+        console.log("itt")
         const coordinates = getCoordinates(markersObj);
         const routeCoordinates = await fetchRoute(coordinates);
         addRouteToMap(map, routeCoordinates.geometry.coordinates);
@@ -112,41 +85,8 @@ export default function useRoutes({ markersObj, map }) {
 
       updateRoute();
 
-      /*map.addLayer({
-        id: 'point',
-        type: 'circle',
-        source: {
-          type: 'geojson',
-          data: {
-            type: 'FeatureCollection',
-            features: [
-              {
-                type: 'Feature',
-                properties: {},
-                geometry: {
-                  type: 'Point',
-                  coordinates: start,
-                },
-              },
-            ],
-          },
-        },
-        paint: {
-          'circle-radius': 10,
-          'circle-color': '#3887be',
-        },
-      });*/
-
-      for (let i = 1; i < markersObj.length; i++) {
-        const waypointCoords = [markersObj[i].lng, markersObj[i].lat];
-        map.on('click', (event) => {
-          const waypointId = `waypoint-${i}`;
-          //addMarkerToMap(map, waypointId, waypointCoords, '#f30');
-          updateRoute();
-        });
-      }
     }
-  }, [markersObj, map]);
+  }, [markersObj]);// try without map
 
   return { routeInfo, routeCoord };
 }

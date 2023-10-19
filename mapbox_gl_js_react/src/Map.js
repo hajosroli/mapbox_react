@@ -1,19 +1,19 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
-import { Button} from "react-bootstrap";
 import useRoutes from './Hooks/useRoutes';
-mapboxgl.accessToken = process.env.REACT_APP_ACCESS_TOKEN;
 
+mapboxgl.accessToken = process.env.REACT_APP_ACCESS_TOKEN;
 
 export default function Map() {
   const mapContainer = useRef(null);
   const map = useRef(null);
+  //Initial coordinates of Veszprém
   const [lng, setLng] = useState(17.9156);
   const [lat, setLat] = useState(47.0934);
   const [zoom, setZoom] = useState(12);
-  const [markers, setMarkers] = useState([]);
   const [markersObj, setMarkersObj] = useState([]);
   const {routeInfo, routeCoord} = useRoutes({markersObj, map: map.current})
+  let markerIdCounter = 0; //for adding id to marker objects
   console.log(routeInfo)
   console.log(routeCoord)
 
@@ -43,23 +43,23 @@ export default function Map() {
   const handleMapClick = useCallback((e) => {
     const clickedLngLat = [e.lngLat.lng, e.lngLat.lat];
     const marker = createMarker(clickedLngLat);
-    const markerObj = {
-      id : marker.length,
-      lng : marker.getLngLat().lng.toFixed(4),
-      lat : marker.getLngLat().lat.toFixed(4),
-    }
-    setMarkersObj((prevMarkers) => [...prevMarkers, markerObj]);
+    setMarkersObj((prevMarkers) => [...prevMarkers, marker]);
   }, []);
 
   const createMarker = (lngLat) => {
     const marker = new mapboxgl.Marker().setLngLat(lngLat).addTo(map.current);
-    marker.getElement().addEventListener('mousedown', () => handleRemoveOnMarkerClick(marker));
-    return marker;
+    const markerObj = {
+      id :  markerIdCounter++,
+      lng : marker.getLngLat().lng.toFixed(4),
+      lat : marker.getLngLat().lat.toFixed(4),
+    }
+    marker.getElement().addEventListener('mousedown', () => handleRemoveOnMarkerClick(marker, markerObj.id));
+    return markerObj;
   };
 
-  const handleRemoveOnMarkerClick = (marker) => {
+  const handleRemoveOnMarkerClick = (marker, markerId) => {
     marker.remove();
-    setMarkersObj((prevMarkers) => prevMarkers.filter((m) => m.lng !== marker.getLngLat().lng.toFixed(4) && m.lat !== marker.getLngLat().lat.toFixed(4)));
+    setMarkersObj((prevMarkers) => prevMarkers.filter((m) => m.id !== markerId));//!!!!
   };
 
   return (
