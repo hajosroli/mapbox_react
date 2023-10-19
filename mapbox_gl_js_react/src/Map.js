@@ -1,15 +1,21 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 import { Button} from "react-bootstrap";
+import useRoutes from './Hooks/useRoutes';
 mapboxgl.accessToken = process.env.REACT_APP_ACCESS_TOKEN;
 
-const Map = () => {
+
+export default function Map() {
   const mapContainer = useRef(null);
   const map = useRef(null);
   const [lng, setLng] = useState(17.9156);
   const [lat, setLat] = useState(47.0934);
   const [zoom, setZoom] = useState(12);
   const [markers, setMarkers] = useState([]);
+  const [markersObj, setMarkersObj] = useState([]);
+  const {routeInfo, routeCoord} = useRoutes({markersObj, map: map.current})
+  console.log(routeInfo)
+  console.log(routeCoord)
 
   useEffect(() => {
     if (map.current) return; // Initialize the map only once
@@ -27,19 +33,33 @@ const Map = () => {
       setZoom(map.current.getZoom().toFixed(2));
     });
 
-    map.current.on('click', (e) => {
-      const clickedLngLat = [e.lngLat.lng, e.lngLat.lat];
-      const marker = new mapboxgl.Marker().setLngLat(clickedLngLat).addTo(map.current);
+    map.current.on('click', handleMapClick);
 
-      marker.getElement().addEventListener('mousedown', () => handleRemoveOnMarkerClick(marker));// to remove marker on clickin the icon
-
-      setMarkers((prevMarkers) => [...prevMarkers, marker]);
-    });
+    return () => {
+      map.current.off('click', handleMapClick);
+    };
   }, [lng, lat, zoom]);
+
+  const handleMapClick = useCallback((e) => {
+    const clickedLngLat = [e.lngLat.lng, e.lngLat.lat];
+    const marker = createMarker(clickedLngLat);
+    const markerObj = {
+      id : marker.length,
+      lng : marker.getLngLat().lng.toFixed(4),
+      lat : marker.getLngLat().lat.toFixed(4),
+    }
+    setMarkersObj((prevMarkers) => [...prevMarkers, markerObj]);
+  }, []);
+
+  const createMarker = (lngLat) => {
+    const marker = new mapboxgl.Marker().setLngLat(lngLat).addTo(map.current);
+    marker.getElement().addEventListener('mousedown', () => handleRemoveOnMarkerClick(marker));
+    return marker;
+  };
 
   const handleRemoveOnMarkerClick = (marker) => {
     marker.remove();
-    setMarkers((prevMarkers) => prevMarkers.filter((m) => m !== marker));
+    setMarkersObj((prevMarkers) => prevMarkers.filter((m) => m.lng !== marker.getLngLat().lng.toFixed(4) && m.lat !== marker.getLngLat().lat.toFixed(4)));
   };
 
   return (
@@ -51,15 +71,14 @@ const Map = () => {
       <div className="markers-container">
         <h2>Markers</h2>
         <ul>
-          {markers.map((marker, index) => (
+          {markersObj.map((marker, index) => (
             <li key={index}>
-              Marker {index + 1}: {marker.getLngLat().lng.toFixed(4)}, {marker.getLngLat().lat.toFixed(4)}
+              Marker {marker.id}: {marker.lng}, {marker.lat}
             </li>
           ))}
         </ul>
       </div>
     </div>
   );
-};
+}
 
-export default Map;
