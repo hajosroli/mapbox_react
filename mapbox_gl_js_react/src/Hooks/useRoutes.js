@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import useMapContext from '../Context/useMapContext';
 
 const ACCESS_TOKEN = process.env.REACT_APP_ACCESS_TOKEN;
 const DIRECTIONS_API = `https://api.mapbox.com/directions/v5/mapbox/driving/`;
@@ -17,7 +18,8 @@ const fetchRoute = async (coordinates) => {
   }
 };
 
-const addRouteToMap = (map, coordinates) => {
+const addRouteToMap = (map, coordinates,routeLayerId, color, lineWidth) => {
+  console.log(color)
   const geojson = {
     type: 'Feature',
     properties: {},
@@ -31,7 +33,7 @@ const addRouteToMap = (map, coordinates) => {
     map.getSource('route').setData(geojson);
   } else {
     map.addLayer({
-      id: 'route',
+      id: routeLayerId,
       type: 'line',
       source: {
         type: 'geojson',
@@ -42,13 +44,24 @@ const addRouteToMap = (map, coordinates) => {
         'line-cap': 'round',
       },
       paint: {
-        'line-color': '#3887be',
-        'line-width': 5,
+        'line-color': color,
+        'line-width':  Number(lineWidth),
         'line-opacity': 0.75,
       },
     });
   }
 };
+const changeColorOfExistingRoute = (map, routeLayerId, color, lineWidth) =>{
+  if (map.getLayer(routeLayerId)) {
+    // Update the line color
+    map.setPaintProperty(routeLayerId, 'line-color', color);
+    
+    // Update the line width
+    map.setPaintProperty(routeLayerId, 'line-width', Number(lineWidth));
+  } else {
+    console.error('Route layer not found on the map.');
+  }
+}
 
 const calculateRouteInfo = (routeData) => {
     let routeDistance = 0;
@@ -57,36 +70,39 @@ const calculateRouteInfo = (routeData) => {
         routeDistance += leg.distance;
         routeDuration += leg.duration;
     }
-    return {distance: Math.round(routeDistance),
+    return {distance: Math.round(routeDistance / 1000), // metres to km
     duration: Math.round(routeDuration / 60) }//seconds to minutes}
 }
 
 
-export default function useRoutes({ markersObj, map }) {
-  const [routeInfo, setRouteInfo] = useState({
-    distance: null,
-    duration: null,
-  });
-  const [routeCoord, setRouteCoord] = useState([]);
-
-
+export default function useRoutes() {
+  const {
+    routeCoord, 
+    setRouteCoord, 
+    routeInfo, 
+    setRouteInfo,
+    markersObj,
+    map,
+    color,
+    lineWidth
+  } = useMapContext();
+  const routeLayerId = 'route';
+console.log(color)
   useEffect(() => {
     if (markersObj.length >= 2) {
-      const start = [markersObj[0].lng, markersObj[0].lat];
-
+      
       const updateRoute = async () => {
-        console.log("itt")
         const coordinates = getCoordinates(markersObj);
         const routeCoordinates = await fetchRoute(coordinates);
-        addRouteToMap(map, routeCoordinates.geometry.coordinates);
+        addRouteToMap(map, routeCoordinates.geometry.coordinates,routeLayerId, color, lineWidth);
+        changeColorOfExistingRoute(map, routeLayerId, color, lineWidth)
         setRouteInfo(calculateRouteInfo(routeCoordinates.legs))
         setRouteCoord(routeCoordinates);
       };
-
       updateRoute();
-
     }
-  }, [markersObj]);// try without map
+  }, [markersObj, color, lineWidth]);
+  
 
   return { routeInfo, routeCoord };
 }
