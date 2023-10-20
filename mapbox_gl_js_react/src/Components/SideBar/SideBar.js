@@ -24,12 +24,19 @@ const fetchLocations = async (markers) => {
 return locations;
 }
 export default function SideBar() {
-    const { map,routeInfo, markersObj } = useMapContext();
+    const { 
+      map,
+      routeInfo,
+      markersObj, 
+      color, 
+      setColor, 
+      lineWidth, 
+      setLineWidth } = useMapContext();
+    const [locations, setLocations] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const { createMarker } = useMarkers(); 
-    const [locations, setLocations] = useState([]);
-
+  
     useEffect(() => {
         const getLocations = async () => {
             if (!map || !markersObj){ return };
@@ -38,7 +45,7 @@ export default function SideBar() {
         }
         getLocations()
     }, [markersObj])
-    
+
     const handleSearch = async () => {
       try {
         // Perform a location search using Mapbox Geocoding
@@ -79,33 +86,78 @@ export default function SideBar() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-          <button onClick={handleSearch}>Search</button>
+          <button  onClick={handleSearch}>Search</button>
         </div>
-        <h1>Route Information</h1>
-  <table>
-    <tbody>
-      <tr className="info-item">
-        <td><strong>Duration:</strong></td>
-        <td>{formattedDuration}</td>
-      </tr>
-      <tr className="info-item">
-        <td><strong>Distance:</strong></td>
-        <td>{formattedDistance}</td>
-      </tr>
-    </tbody>
-  </table>
-  <div className="search-results">
-    {locations ? locations.map((result, index) => (
-      <div key={index}>
-        <span>
-          {index === 0 && <strong>From: </strong>} {/* Első elem előtt: "From: " */}
-          {index > 0 && index < locations.length - 1 && <strong>Via: </strong>} {/* Köztes elemek előtt: "Via: " */}
-          {index === locations.length - 1 && <strong>To: </strong>} {/* Utolsó elem előtt: "To: " */}
-        </span>
+    
+        <div className="route-info">
+          <h1>Route Information</h1>
+          <table>
+            <tbody>
+              <tr>
+                <td><p>Duration:</p></td>
+                <td>{formattedDuration}</td>
+              </tr>
+              <tr>
+                <td><p>Distance:</p></td>
+                <td>{formattedDistance}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+    
+        <div className="search-results">
+  {locations ? (
+    locations.map((result, index) => (
+      <div key={index} className="result-item">
+        {index === 0 && (
+          <span className="result-label start-label">
+            <strong>Start:</strong>
+          </span>
+        )}
+        {index > 0 && index < locations.length - 1 && (
+          <span className="result-label via-label">
+            <strong>via:</strong>
+          </span>
+        )}
+        {index > 0 && index === locations.length - 1 && (
+          <span className="result-label end-label">
+            <strong>End:</strong>
+          </span>
+        )}
         <span>{result}</span>
       </div>
-    )) : null}
-  </div>
+    ))
+  ) : null}
+</div>
+        <div className="styling-container">
+          <h1 className="styling-header">Edit Route Style</h1>
+          <div className="input-label-group">
+            <label className="input-label" htmlFor="color-picker">
+             <p> Color:</p>
+            </label>
+            <input
+              type="color"
+              name="color-picker"
+              value={color}
+              onChange={(e) => setColor(e.target.value)}
+            />
+          </div>
+          <div className="input-label-group">
+            <label className="input-label" htmlFor="route-line-width">
+              <p>Width:</p>
+            </label>
+            <input
+              type="range"
+              name="route-line-width"
+              min={2}
+              max={20}
+              step={1}
+              value={lineWidth}
+              onChange={(e) => setLineWidth(e.target.value)}
+            />
+          </div>
+        </div>
       </div>
     );
+    
   }

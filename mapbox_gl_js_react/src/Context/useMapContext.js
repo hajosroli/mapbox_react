@@ -9,7 +9,9 @@ export const MapContextProvider = (props) => {
         duration: null,
       });
       const [routeCoord, setRouteCoord] = useState([]);
-      const [map, setMap] = useState(null)
+      const [map, setMap] = useState(null);
+      const [color, setColor] = useState('#0000FF');
+      const [lineWidth, setLineWidth] = useState(5);
 
     const mapProvider = (currentMap) => {
         setMap(currentMap)
@@ -24,7 +26,11 @@ export const MapContextProvider = (props) => {
             routeInfo, 
             setRouteInfo,
             mapProvider,
-            map
+            map,
+            color,
+            setColor,
+            lineWidth,
+            setLineWidth
             }}>
         {props.children}
         </MapContext.Provider>;

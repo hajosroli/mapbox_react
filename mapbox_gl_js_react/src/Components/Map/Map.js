@@ -13,13 +13,9 @@ export default function Map() {
   const [lng, setLng] = useState(17.9156);
   const [lat, setLat] = useState(47.0934);
   const [zoom, setZoom] = useState(12);
-  const {markersObj, mapProvider} = useMapContext(); // No need to use markersObj and setMarkersObj
-  const { routeInfo, routeCoord } = useRoutes();
-  const {  createMarker } = useMarkers(); // Use the custom hook
-
-  console.log(routeInfo);
-  console.log(routeCoord);
-  console.log(markersObj);
+  const { mapProvider} = useMapContext(); 
+  useRoutes();
+  const {  createMarker } = useMarkers();
 
   useEffect(() => {
     if (map.current) return; // Initialize the map only once
@@ -56,16 +52,6 @@ export default function Map() {
         Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
       </div>
       <div ref={mapContainer} className="map-container" />
-      <div className="markers-container">
-        <h2>Markers</h2>
-        <ul>
-          {markersObj.map((marker, index) => (
-            <li key={index}>
-              Marker {marker.id}: {marker.lng}, {marker.lat}
-            </li>
-          ))}
-        </ul>
-      </div>
     </div>
   );
 }

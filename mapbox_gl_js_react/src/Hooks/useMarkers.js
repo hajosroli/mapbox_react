@@ -1,10 +1,8 @@
-import { useEffect, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import useMapContext from '../Context/useMapContext';
 export function useMarkers() {
-    const {markersObj, setMarkersObj} = useMapContext();
-  
-   
+    const {setMarkersObj} = useMapContext();
+
     const createMarker = (map, lngLat) => {
       const marker = new mapboxgl.Marker().setLngLat(lngLat).addTo(map);
       const markerObj = {

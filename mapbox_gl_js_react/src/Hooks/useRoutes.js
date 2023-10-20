@@ -18,7 +18,8 @@ const fetchRoute = async (coordinates) => {
   }
 };
 
-const addRouteToMap = (map, coordinates) => {
+const addRouteToMap = (map, coordinates,routeLayerId, color, lineWidth) => {
+  console.log(color)
   const geojson = {
     type: 'Feature',
     properties: {},
@@ -32,7 +33,7 @@ const addRouteToMap = (map, coordinates) => {
     map.getSource('route').setData(geojson);
   } else {
     map.addLayer({
-      id: 'route',
+      id: routeLayerId,
       type: 'line',
       source: {
         type: 'geojson',
@@ -43,13 +44,24 @@ const addRouteToMap = (map, coordinates) => {
         'line-cap': 'round',
       },
       paint: {
-        'line-color': '#3887be',
-        'line-width': 5,
+        'line-color': color,
+        'line-width':  Number(lineWidth),
         'line-opacity': 0.75,
       },
     });
   }
 };
+const changeColorOfExistingRoute = (map, routeLayerId, color, lineWidth) =>{
+  if (map.getLayer(routeLayerId)) {
+    // Update the line color
+    map.setPaintProperty(routeLayerId, 'line-color', color);
+    
+    // Update the line width
+    map.setPaintProperty(routeLayerId, 'line-width', Number(lineWidth));
+  } else {
+    console.error('Route layer not found on the map.');
+  }
+}
 
 const calculateRouteInfo = (routeData) => {
     let routeDistance = 0;
@@ -70,22 +82,27 @@ export default function useRoutes() {
     routeInfo, 
     setRouteInfo,
     markersObj,
-    map
+    map,
+    color,
+    lineWidth
   } = useMapContext();
-
+  const routeLayerId = 'route';
+console.log(color)
   useEffect(() => {
     if (markersObj.length >= 2) {
       
       const updateRoute = async () => {
         const coordinates = getCoordinates(markersObj);
         const routeCoordinates = await fetchRoute(coordinates);
-        addRouteToMap(map, routeCoordinates.geometry.coordinates);
+        addRouteToMap(map, routeCoordinates.geometry.coordinates,routeLayerId, color, lineWidth);
+        changeColorOfExistingRoute(map, routeLayerId, color, lineWidth)
         setRouteInfo(calculateRouteInfo(routeCoordinates.legs))
         setRouteCoord(routeCoordinates);
       };
       updateRoute();
     }
-  }, [markersObj]);// try without map
+  }, [markersObj, color, lineWidth]);
+  
 
   return { routeInfo, routeCoord };
 }
