@@ -160,3 +160,33 @@ input[type="range"] {
   color: #dc3545; /* Red color for "End" */
 }
 
+/* Style for suggestions container */
+.suggestions-container {
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+/* Style for individual suggestion items */
+.suggestion {
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  border-bottom: 1px solid #ccc;
+}
+
+.suggestion:last-child {
+  border-bottom: none;
+}
+
+.suggestion:hover {
+  background-color: #e0e0e0;
+}
+.location-search {
+  position: relative;
+}
