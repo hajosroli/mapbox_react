@@ -1,5 +1,6 @@
 import mapboxgl from 'mapbox-gl';
 import useMapContext from '../Context/useMapContext';
+
 export function useMarkers() {
     const {setMarkersObj} = useMapContext();
 
@@ -10,7 +11,6 @@ export function useMarkers() {
         lng: marker.getLngLat().lng.toFixed(4),
         lat: marker.getLngLat().lat.toFixed(4),
       };
-      console.log("click2")
       marker.getElement().addEventListener('mousedown', () =>
         handleRemoveOnMarkerClick(marker, markerObj.id)
       );

@@ -1,22 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect} from 'react';
 import useMapContext from '../Context/useMapContext';
-
-const ACCESS_TOKEN = process.env.REACT_APP_ACCESS_TOKEN;
-const DIRECTIONS_API = `https://api.mapbox.com/directions/v5/mapbox/driving/`;
-const DIRECTIONS_PARAMS = `?geometries=geojson&access_token=${ACCESS_TOKEN}`;
+import { fetchRoute } from '../FetchUtils/fetchUtils';
 
 const getCoordinates = (markers) => markers.map((marker) => `${marker.lng},${marker.lat}`).join(";");
-
-const fetchRoute = async (coordinates) => {
-  try {
-    const response = await fetch(`${DIRECTIONS_API}${coordinates}${DIRECTIONS_PARAMS}`, { method: 'GET' });
-    const data = await response.json();
-    return data.routes[0];
-  } catch (error) {
-    console.error('Error fetching route:', error);
-    return [];
-  }
-};
 
 const addRouteToMap = (map, coordinates,routeLayerId, color, lineWidth) => {
   console.log(color)
@@ -28,7 +14,6 @@ const addRouteToMap = (map, coordinates,routeLayerId, color, lineWidth) => {
       coordinates: coordinates,
     },
   };
-
   if (map.getSource('route')) {
     map.getSource('route').setData(geojson);
   } else {
@@ -63,6 +48,16 @@ const changeColorOfExistingRoute = (map, routeLayerId, color, lineWidth) =>{
   }
 }
 
+const removeRouteIfOnlyOneMarker = (markers, map, routeLayerId) => {
+    // Remove the route from the map if it exists
+    if (map.getLayer(routeLayerId)) {
+      map.removeLayer(routeLayerId);
+    }
+    if (map.getSource('route')) {
+      map.removeSource('route');
+    }
+};
+
 const calculateRouteInfo = (routeData) => {
     let routeDistance = 0;
     let routeDuration = 0;
@@ -73,7 +68,6 @@ const calculateRouteInfo = (routeData) => {
     return {distance: Math.round(routeDistance / 1000), // metres to km
     duration: Math.round(routeDuration / 60) }//seconds to minutes}
 }
-
 
 export default function useRoutes() {
   const {
@@ -87,7 +81,7 @@ export default function useRoutes() {
     lineWidth
   } = useMapContext();
   const routeLayerId = 'route';
-console.log(color)
+
   useEffect(() => {
     if (markersObj.length >= 2) {
       
@@ -96,10 +90,13 @@ console.log(color)
         const routeCoordinates = await fetchRoute(coordinates);
         addRouteToMap(map, routeCoordinates.geometry.coordinates,routeLayerId, color, lineWidth);
         changeColorOfExistingRoute(map, routeLayerId, color, lineWidth)
+        
         setRouteInfo(calculateRouteInfo(routeCoordinates.legs))
         setRouteCoord(routeCoordinates);
       };
       updateRoute();
+    }else if(markersObj.length < 2 && markersObj.length > 0){
+      removeRouteIfOnlyOneMarker(markersObj, map, routeLayerId);
     }
   }, [markersObj, color, lineWidth]);
   
