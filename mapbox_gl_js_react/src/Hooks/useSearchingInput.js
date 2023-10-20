@@ -1,20 +1,15 @@
-import useMapContext from "../../Context/useMapContext"
-import { useMarkers } from "../../Hooks/useMarkers"; 
-import LocationFinder from "./LocationFinder";
-import RouteInfoProvider from "./RouteInfoProvider";
-import RouteStyler from "./RouteStyler";
-import SearchResults from "./SearchResults";
-import "./SideBar.css";
-import React, { useEffect, useState} from 'react';
-import { fetchLocations, fetchLocationsName } from "../../FetchUtils/fetchUtils";
+import { useEffect, useState} from 'react';
+import useMapContext from "../Context/useMapContext"
+import { useMarkers } from "../Hooks/useMarkers"; 
+import { fetchLocations, fetchLocationsName } from "../FetchUtils/fetchUtils";
 
-export default function SideBar() {
+export default function useSearchingInput(){
     const {map, markersObj} = useMapContext();
     const [locationNames, setLocationNames] = useState([]);
     const [suggestedLocations, setSuggestedLocations] = useState([])
     const [selectedLocation, setSelectedLocation] = useState(null)
     const [searchQuery, setSearchQuery] = useState('');
-    const { createMarker } = useMarkers(); 
+    const { createMarker } = useMarkers();
  
     useEffect(() => {
         const getLocations = async () => {
@@ -58,21 +53,14 @@ export default function SideBar() {
     }
     else{return searchQuery}
   }
-
-    return (
-      <div className="sidebar-container">
-        <LocationFinder  
-          setSearchQuery={setSearchQuery}
-          handleSearch={handleSearch}
-          suggestedLocations={suggestedLocations}
-          setSelectedLocation={setSelectedLocation}
-          selectedLocation={selectedLocation}
-          handleLocationSelect={handleLocationSelect}
-          setInputValue={setInputValue}/>
-        <RouteInfoProvider/>
-        <SearchResults locationNames={locationNames}/>
-        <RouteStyler/>
-      </div>
-    );
-    
-  }
+  
+  return{
+    handleSearch,
+    handleLocationSelect,
+    setInputValue,
+    locationNames,
+    suggestedLocations,
+    selectedLocation,
+    setSearchQuery
+}
+}

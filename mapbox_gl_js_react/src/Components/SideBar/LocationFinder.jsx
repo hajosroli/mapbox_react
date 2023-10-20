@@ -1,11 +1,13 @@
-export default function LocationFinder({
-    setSearchQuery,
-    handleSearch, 
-    suggestedLocations,
-    selectedLocation, 
-    handleLocationSelect,
-    setInputValue}){
-    
+import useSearchingInput from "../../Hooks/useSearchingInput";
+
+export default function LocationFinder(){
+        const {setSearchQuery,
+            handleSearch, 
+            suggestedLocations,
+            selectedLocation, 
+            handleLocationSelect,
+            setInputValue} = useSearchingInput()
+  
     return (
         <div className="location-search-container">
             <h1>Find Location</h1>
