@@ -13,6 +13,7 @@ export const MapContextProvider = (props) => {
       const [color, setColor] = useState('#0000FF');
       const [lineWidth, setLineWidth] = useState(5);
       const [isSideBarVisible, setIsSideBarVisible] = useState(true);
+      const [routeMode, setRouteMode] = useState('driving');
 
     
     const mapProvider = (currentMap) => {
@@ -34,7 +35,9 @@ export const MapContextProvider = (props) => {
             lineWidth,
             setLineWidth,
             isSideBarVisible,
-            setIsSideBarVisible, 
+            setIsSideBarVisible,
+            routeMode,
+            setRouteMode 
             }}>
         {props.children}
         </MapContext.Provider>;
