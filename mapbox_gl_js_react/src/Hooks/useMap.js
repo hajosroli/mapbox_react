@@ -3,7 +3,7 @@ import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-load
 import useRoutes from '../Hooks/useRoutes';
 import { useMarkers } from '../Hooks/useMarkers';
 import useMapContext from '../Context/useMapContext';
-
+mapboxgl.accessToken = process.env.REACT_APP_ACCESS_TOKEN;
 export default function useMap(){
     const mapContainer = useRef(null);
     const map = useRef(null);

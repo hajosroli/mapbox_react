@@ -6,8 +6,9 @@ import { fetchLocations, fetchLocationsName } from "../FetchUtils/fetchUtils";
 export default function useSearchingInput(){
     const {map, markersObj} = useMapContext();
     const [locationNames, setLocationNames] = useState([]);
-    const [suggestedLocations, setSuggestedLocations] = useState([])
-    const [selectedLocation, setSelectedLocation] = useState(null)
+    const [suggestedLocations, setSuggestedLocations] = useState([]);
+    const [selectedLocation, setSelectedLocation] = useState(null);
+    const [searchingResultError, setSearchingResultError] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
     const { createMarker } = useMarkers();
  
@@ -24,9 +25,16 @@ export default function useSearchingInput(){
       if(searchQuery.length > 2){
         (async ()=>{
           let data = await fetchLocations(searchQuery);
-          setSuggestedLocations(data.features);
-          console.log(data.features[0].place_name)
+          if(data.features.length > 0){
+            setSuggestedLocations(data.features);
+            setSearchingResultError(null)
+          }else{
+            setSuggestedLocations([]);
+            setSearchingResultError('No Locations found!');
+          }
           })()
+      }else if(searchQuery.length === 0){
+        setSuggestedLocations([]);
       }
   }, [searchQuery])
 
@@ -53,7 +61,7 @@ export default function useSearchingInput(){
     }
     else{return searchQuery}
   }
-  
+
   return{
     handleSearch,
     handleLocationSelect,
@@ -61,6 +69,7 @@ export default function useSearchingInput(){
     locationNames,
     suggestedLocations,
     selectedLocation,
-    setSearchQuery
+    setSearchQuery,
+    searchingResultError
 }
 }

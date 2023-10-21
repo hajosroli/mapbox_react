@@ -1,0 +1,33 @@
+/* RouteStyler editing  */
+.styling-container {
+    margin-bottom: 20px;
+  }
+  
+  .styling-header {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: gray;
+  }
+  
+  .input-label-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .input-label {
+    margin-right: 10px;
+    font-size: 16px;
+    color: #555;
+  }
+  
+    /* Color picker input style */
+    input[type="color"] {
+    width: 75px;
+  }
+  
+    /* Range input style */
+    input[type="range"] {
+    width: 75%;
+    max-width: 200px ;
+  }
