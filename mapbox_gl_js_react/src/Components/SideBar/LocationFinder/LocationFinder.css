@@ -1,12 +1,10 @@
 /* Location search block */
 .location-search {
-  
     align-items: center;
     margin-bottom: 20px;
-    position: relative; /* Block-level modifier */
+    position: relative; 
   }
   
-  /* Input element inside the location search block */
   .location-search__input {
     flex: 1;
     padding: 10px;
@@ -18,7 +16,6 @@
     max-width: 25vh;
   }
   
-  /* Button element inside the location search block */
   .location-search__button {
     background-color: #292a2a;
     color: #7a7777;
@@ -31,7 +28,7 @@
   
   /* Suggestions container block */
   .suggestions-container {
-    width: 100%;
+    width: fit-content;
     background-color: #fff;
     border: 1px solid #ccc;
     border-top: none;
@@ -47,15 +44,45 @@
     cursor: pointer;
     transition: background-color 0.3s;
     border-bottom: 1px solid #ccc;
+    max-width: 200px; /* Set your desired maximum width */
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  /* Hover state for suggestion elements */
+  .suggestion:hover {
+    background-color: gray;
   }
   
-  /* Modifier class for the last suggestion element inside the suggestions container */
+  /* Tooltip styles */
+  .suggestion::before {
+    content: attr(data-text); /* Display the full text from the data-text attribute */
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 5px;
+    border-radius: 4px;
+    white-space: normal; /* Allow text from wrapping */
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s;
+    top: 30%;
+    left: 75%; 
+    transform: translateX(-50%);
+  }
+  
+  .suggestion:hover::before {
+    visibility: visible;
+    opacity: 1;
+  }
+  .suggestion__text {
+    font-size: 12px;
+  }
+  
   .suggestion--last {
     border-bottom: none;
   }
   
-  /* Hover state for suggestion elements */
-  .suggestion:hover {
-    background-color: #e0e0e0;
-  }
+  
   

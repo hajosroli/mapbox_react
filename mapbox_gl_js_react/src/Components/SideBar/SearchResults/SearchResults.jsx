@@ -7,7 +7,7 @@ export default function SearchResults(){
     <div className="search-results">
       {locationNames ? (
         locationNames.map((result, index) => (
-          <div key={index} className="result-item">
+          <div key={index} data-text={result} className="result-item">
             {index === 0 && (
               <span className="result-label result-label--start">
                 <strong>Start:</strong>
@@ -23,7 +23,7 @@ export default function SearchResults(){
                 <strong>End:</strong>
               </span>
             )}
-            <span>{result}</span>
+            <span className="result-item__span" title={result} >{result}</span>
           </div>
         ))
       ) : null}

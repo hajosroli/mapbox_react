@@ -29,6 +29,7 @@ export default function LocationFinder(){
                           key={suggestion.id}
                           onClick={() => handleLocationSelect(suggestion)}
                           className="suggestion"
+                          data-text={suggestion.place_name} 
                         >
                           <p className="suggestion__text">{suggestion.place_name}</p>
                         </div>

@@ -1,0 +1,15 @@
+.info-box {
+    background-color: rgba(35, 55, 75, 0.9);
+    color: rgb(156, 153, 153);
+    font-family: monospace;
+    font-weight: 500;
+    padding: 10px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    z-index: 1;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    text-align: center;
+    width: 20vh;
+  }
