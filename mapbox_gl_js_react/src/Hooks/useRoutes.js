@@ -80,19 +80,35 @@ export default function useRoutes() {
     map,
     color,
     lineWidth,
-    routeMode
+    routeMode,
+    setErrorMessage,
+    setShowAlert
   } = useMapContext();
   const routeLayerId = 'route';
+
+  // Get route between markers if there is any
+  const getRoute = async (coordinates) => {
+    const routeCoordinates = await fetchRoute(routeMode,coordinates);
+    if(routeCoordinates){
+      addRouteToMap(map, routeCoordinates.geometry.coordinates,routeLayerId, color, lineWidth);
+      return routeCoordinates;
+    }else{
+      setErrorMessage('No route is available!');
+      setShowAlert(true);
+      return null;
+    }
+  }
  
   useEffect(() => {
     if (markersObj.length >= 2) {
       const updateRoute = async () => {
         const coordinates = getCoordinates(markersObj);
-        const routeCoordinates = await fetchRoute(routeMode,coordinates);
-        addRouteToMap(map, routeCoordinates.geometry.coordinates,routeLayerId, color, lineWidth);
-        changeColorOfExistingRoute(map, routeLayerId, color, lineWidth)
-        setRouteInfo(calculateRouteInfo(routeCoordinates.legs))
-        setRouteCoord(routeCoordinates);
+        const routeCoordinates = await getRoute(coordinates)
+        if(routeCoordinates){
+          changeColorOfExistingRoute(map, routeLayerId, color, lineWidth)
+          setRouteInfo(calculateRouteInfo(routeCoordinates.legs))
+          setRouteCoord(routeCoordinates);
+        }
       };
       updateRoute();
     }else if(markersObj.length < 2 && markersObj.length > 0){

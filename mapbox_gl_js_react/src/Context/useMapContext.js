@@ -16,6 +16,7 @@ export const MapContextProvider = (props) => {
       const [routeMode, setRouteMode] = useState('driving');
       const [isMarkerLimitReached, setIsMarkerLimitReached] = useState(false);
       const [showAlert, setShowAlert] = useState(false);
+      const [errorMessage, setErrorMessage] = useState('');
       const markerLimit = 6;
      
     const mapProvider = (currentMap) => {
@@ -44,7 +45,9 @@ export const MapContextProvider = (props) => {
             isMarkerLimitReached,
             setIsMarkerLimitReached,
             showAlert,
-            setShowAlert 
+            setShowAlert,
+            errorMessage,
+            setErrorMessage 
             }}>
           {props.children}
         </MapContext.Provider>;

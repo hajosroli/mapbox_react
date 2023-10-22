@@ -10,11 +10,15 @@ export const fetchRoute = async (mode, coordinates) => {
     try {
       const response = await fetch(`${DIRECTIONS_API}${mode}/${coordinates}${DIRECTIONS_PARAMS}`,
        { method: 'GET' });
-      const data = await response.json();
-      return data.routes[0];
+       if (response.ok) {
+        const data = await response.json();
+        return data.routes[0];
+      } else {
+        console.error("Failed to fetch route");
+        return null;
+      }
     } catch (error) {
       console.error('Error fetching route:', error);
-      return [];
     }
   };
 
