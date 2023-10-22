@@ -19,12 +19,9 @@ This is a web application built using Mapbox GL JS that displays a map centered 
 - [Font Awesome]: Used for icons.
 - [React Bootstrap]: Bootstrap components for React.
 
-
-Follow these instructions to set up the MapBox Map Application on your local machine:
-
 ## Running the Application
 
-Follow these instructions to set up the MapBox Map Application on your local machine:
+Follow these instructions to set up the MapBox Map Application on your local machine.
 You can run the application using either `npm` or Docker Compose.
 
 ### Option 1: Using npm
@@ -49,7 +46,7 @@ $ npm start
 # Open your web browser and go to http://localhost:3000 to explore the MapBox Map App.
 ```
 
-### Option 1: Using npm
+### Option 2: Using Docker Compose
 
 ```bash
 #
