@@ -1,9 +1,10 @@
 import mapboxgl from 'mapbox-gl';
 import useMapContext from '../Context/useMapContext';
-
+import { useState, useEffect } from 'react';
 export function useMarkers() {
-    const {setMarkersObj} = useMapContext();
-
+    const {setMarkersObj, markersObj, markerLimit, setIsMarkerLimitReached, isMarkerLimitReached} = useMapContext();
+    
+  
     const createMarker = (map, lngLat) => {
       const marker = new mapboxgl.Marker().setLngLat(lngLat).addTo(map);
       const markerObj = {
@@ -21,7 +22,20 @@ export function useMarkers() {
     const handleRemoveOnMarkerClick = (marker, markerId) => {
       marker.remove();
       setMarkersObj((prevMarkers) => prevMarkers.filter((m) => m.id !== markerId));
+      
     };
   
+    const checkMarkerLimit = () => {
+      if (markersObj.length >= markerLimit) {
+        setIsMarkerLimitReached(true);
+      } else {
+        setIsMarkerLimitReached(false);
+      }
+    };
+    useEffect(() => {
+      // Ensure the initial state of isMarkerLimitReached is correct
+      checkMarkerLimit();
+    }, [markersObj, markerLimit]);
+
     return { createMarker };
   }

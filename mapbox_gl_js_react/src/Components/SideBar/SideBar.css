@@ -16,15 +16,15 @@
 }
 .button-container {
   display: flex;
-  justify-content: flex-end; /* Align items to the right */
-  align-items: center; /* Align items vertically if needed */
+  justify-content: flex-end; 
+  align-items: center; 
   width: 95%;
 }
 
 /* Header style */
 h1 {
   font-size: 24px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   color: gray;
 }
 

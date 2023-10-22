@@ -81,17 +81,14 @@ export default function useRoutes() {
     routeMode
   } = useMapContext();
   const routeLayerId = 'route';
-
-
+ 
   useEffect(() => {
     if (markersObj.length >= 2) {
-      
       const updateRoute = async () => {
         const coordinates = getCoordinates(markersObj);
         const routeCoordinates = await fetchRoute(routeMode,coordinates);
         addRouteToMap(map, routeCoordinates.geometry.coordinates,routeLayerId, color, lineWidth);
         changeColorOfExistingRoute(map, routeLayerId, color, lineWidth)
-        
         setRouteInfo(calculateRouteInfo(routeCoordinates.legs))
         setRouteCoord(routeCoordinates);
       };
