@@ -4,16 +4,21 @@
   flex: 1;
   height: 100vh;
   background-color: rgba(35, 55, 75, 0.9);
-  color: #fff;
   padding: 6px 12px;
   font-family: monospace;
   z-index: 1;
   position: absolute;
   top: 0;
   left: 0;
-  margin: 12px;
+  margin: 0;
   border-radius: 4px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.button-container {
+  display: flex;
+  justify-content: flex-end; /* Align items to the right */
+  align-items: center; /* Align items vertically if needed */
+  width: 95%;
 }
 
 /* Header style */
@@ -30,133 +35,7 @@ p {
   font-weight: 600;
 }
 
-button {
-  background-color: #1c1c1f;
-}
-
-/* Location search input and button style */
-.location-search {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.location-search input[type="text"] {
-  flex: 1;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-right: 10px;
-  font-size: 16px;
-}
-
-.location-search button {
-  background-color: #292a2a;
-  color: #7a7777;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-/* Route information table style */
-.route-info {
-  margin-bottom: 20px;
-}
-
-.route-info table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.route-info td {
-  padding: 10px;
-  border-bottom: 1px solid #ccc;
-  font-size: 16px;
-  color: gray;
-}
-
-/* Route results style */
-.search-results {
-  margin-bottom: 20px;
-}
-
-.result-item {
-  margin-bottom: 10px;
-}
-
-.result-label {
-  font-weight: bold;
-  margin-right: 5px;
-}
-
-/* Route style editing section style */
-.styling-container {
-  margin-bottom: 20px;
-}
-
-.styling-header {
-  font-size: 24px;
-  margin-bottom: 20px;
-  color: gray;
-}
 
 
-.input-label-group {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-}
 
-.input-label {
-  margin-right: 10px;
-  font-size: 16px;
-  color: #555;
-}
-
-/* Color picker input style */
-input[type="color"] {
-  width: 30px;
-}
-
-/* Range input style */
-input[type="range"] {
-  width: 100%;
-  
-}
-
-/* Add this CSS to your existing styles */
-.result-item {
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  border-radius: 5px;
-  background-color: #f8f8f8;
-  color: gray;
-  margin-bottom: 10px;
-  transition: background-color 0.3s;
-}
-
-.result-item:hover {
-  background-color: gray;
-  color: white;
-}
-
-.result-label {
-  margin-right: 10px;
-  font-weight: bold;
-}
-
-.start-label {
-  color: #28a745; /* Green color for "Start" */
-}
-
-.via-label {
-  color: #ffc107; /* Yellow color for "Via" */
-}
-
-.end-label {
-  color: #dc3545; /* Red color for "End" */
-}
 

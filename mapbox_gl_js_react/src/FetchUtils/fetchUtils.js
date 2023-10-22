@@ -1,13 +1,14 @@
  import {
-    DIRECTIONS_API_DRIVING, 
+    DIRECTIONS_API, 
     DIRECTIONS_PARAMS,
     GEOCODING_API_URL,
-    ACCESS_TOKEN_FOR_LOCATION_URLS} from "../Constants/constants.js"
-    
+    ACCESS_TOKEN_FOR_LOCATION_URLS,
+    ACCESS_TOKEN_FOR_LOCATION_URLS_AUTOCOMPLETE} from "../Constants/constants.js"
+
  // Get routes from Api
-export const fetchRoute = async (coordinates) => {
+export const fetchRoute = async (mode, coordinates) => {
     try {
-      const response = await fetch(`${DIRECTIONS_API_DRIVING}${coordinates}${DIRECTIONS_PARAMS}`,
+      const response = await fetch(`${DIRECTIONS_API}${mode}/${coordinates}${DIRECTIONS_PARAMS}`,
        { method: 'GET' });
       const data = await response.json();
       return data.routes[0];
@@ -21,13 +22,14 @@ export const fetchRoute = async (coordinates) => {
  export const fetchLocations = async (searchQuery) => {
     try {
       const response = await fetch(
-        `${GEOCODING_API_URL}${searchQuery}${ACCESS_TOKEN_FOR_LOCATION_URLS}`,
+        `${GEOCODING_API_URL}${searchQuery}${ACCESS_TOKEN_FOR_LOCATION_URLS_AUTOCOMPLETE}`,
         {
           method: "GET",
         }
       );
         if(response.ok){
           const data = await response.json()
+          console.log("fetchLocations" + data)
           return data;
         } else {
           console.error("Failed to fetch locations");
@@ -45,7 +47,7 @@ export const fetchRoute = async (coordinates) => {
           try {
               // Name of Location search
               const response = await fetch(
-                `${GEOCODING_API_URL}${markers[i].lng}, ${markers[i].lat}${ACCESS_TOKEN_FOR_LOCATION_URLS}`
+                `${GEOCODING_API_URL}${markers[i].lng},${markers[i].lat}${ACCESS_TOKEN_FOR_LOCATION_URLS}`
               );
               const data = await response.json();
               console.log(data)

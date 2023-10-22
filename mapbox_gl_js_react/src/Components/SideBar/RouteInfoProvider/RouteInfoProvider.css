@@ -1,0 +1,35 @@
+/* Route information table style */
+.route-info {
+    margin-bottom: 20px;
+  }
+  
+  .route-info__header {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: gray;
+  }
+  
+  .route-info__table {
+    width: 90%;
+    border-collapse: collapse;
+  }
+  
+  .route-info__row {
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .route-info__cell {
+    padding: 10px;
+    font-size: 16px;
+    color: gray;
+  }
+  
+  .route-info__cell--label {
+    width: 30%;
+  }
+  
+  .route-info__cell--value {
+    width: 70%;
+  }
+  
+  

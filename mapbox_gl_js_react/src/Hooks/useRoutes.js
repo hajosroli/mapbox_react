@@ -78,16 +78,18 @@ export default function useRoutes() {
     markersObj,
     map,
     color,
-    lineWidth
+    lineWidth,
+    routeMode
   } = useMapContext();
   const routeLayerId = 'route';
+
 
   useEffect(() => {
     if (markersObj.length >= 2) {
       
       const updateRoute = async () => {
         const coordinates = getCoordinates(markersObj);
-        const routeCoordinates = await fetchRoute(coordinates);
+        const routeCoordinates = await fetchRoute(routeMode,coordinates);
         addRouteToMap(map, routeCoordinates.geometry.coordinates,routeLayerId, color, lineWidth);
         changeColorOfExistingRoute(map, routeLayerId, color, lineWidth)
         
@@ -97,8 +99,12 @@ export default function useRoutes() {
       updateRoute();
     }else if(markersObj.length < 2 && markersObj.length > 0){
       removeRouteIfOnlyOneMarker(markersObj, map, routeLayerId);
+      setRouteInfo({
+        distance: null,
+        duration: null,
+      });
     }
-  }, [markersObj, color, lineWidth]);
+  }, [markersObj, color, lineWidth, routeMode]);
   
 
   return { routeInfo, routeCoord };

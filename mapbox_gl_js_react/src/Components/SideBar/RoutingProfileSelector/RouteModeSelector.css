@@ -1,0 +1,27 @@
+.mode-icons {
+    display: flex;
+    justify-content: space-between; 
+    margin-top: 20px;
+    width: 40%
+  }
+  
+.fa-icon {
+    font-size: 24px; 
+    cursor: pointer; 
+    margin: 0 10px; 
+    padding: 10px; 
+    border-radius: 50%; 
+    background-color: #f0f0f0; 
+    color: #333; 
+    transition: background-color 0.3s, color 0.3s; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+.fa-icon:hover {
+    background-color: #8a8585; 
+    color: #fff;
+  }
+  

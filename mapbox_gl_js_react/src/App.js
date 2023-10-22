@@ -2,18 +2,16 @@ import React from 'react';
 import Map from './Components/Map/Map';
 import SideBar from './Components/SideBar/SideBar';
 
-import { MapContext, MapContextProvider } from "./Context/useMapContext";
+import useMapContext, { MapContextProvider } from "./Context/useMapContext";
 
 function App() {
-    
+    const {isSideBarVisible} = useMapContext();
+  console.log(isSideBarVisible)
   return (
-  
-    <MapContextProvider>
       <div className='app-container'>
-        <Map />
-        <SideBar />
+        <Map isSideBarVisible={isSideBarVisible}/>
+        {isSideBarVisible ? <SideBar /> : null} 
       </div>
-    </MapContextProvider>
   );
 }
 
