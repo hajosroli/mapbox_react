@@ -5,7 +5,6 @@ import { fetchRoute } from '../FetchUtils/fetchUtils';
 const getCoordinates = (markers) => markers.map((marker) => `${marker.lng},${marker.lat}`).join(";");
 
 const addRouteToMap = (map, coordinates,routeLayerId, color, lineWidth) => {
-  console.log(color)
   const geojson = {
     type: 'Feature',
     properties: {},

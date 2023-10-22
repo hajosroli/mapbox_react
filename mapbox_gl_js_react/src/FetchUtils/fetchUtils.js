@@ -29,7 +29,6 @@ export const fetchRoute = async (mode, coordinates) => {
       );
         if(response.ok){
           const data = await response.json()
-          console.log("fetchLocations" + data)
           return data;
         } else {
           console.error("Failed to fetch locations");
@@ -50,7 +49,6 @@ export const fetchRoute = async (mode, coordinates) => {
                 `${GEOCODING_API_URL}${markers[i].lng},${markers[i].lat}${ACCESS_TOKEN_FOR_LOCATION_URLS}`
               );
               const data = await response.json();
-              console.log(data)
               locations.push(data.features[0].place_name);
       }catch (error) {
           console.error('Error searching for location:', error);
