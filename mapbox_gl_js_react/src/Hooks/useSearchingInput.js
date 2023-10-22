@@ -57,9 +57,9 @@ export default function useSearchingInput(){
   // Setting the value of the input field
   const setInputValue = () => {
     if(selectedLocation !== null){
-        return selectedLocation.place_name;
+      return selectedLocation.place_name;
     }
-    else{return searchQuery}
+    else{ return searchQuery }
   }
 
   return{
@@ -71,5 +71,5 @@ export default function useSearchingInput(){
     selectedLocation,
     setSearchQuery,
     searchingResultError
-}
+  }
 }

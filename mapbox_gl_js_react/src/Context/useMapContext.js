@@ -14,8 +14,10 @@ export const MapContextProvider = (props) => {
       const [lineWidth, setLineWidth] = useState(5);
       const [isSideBarVisible, setIsSideBarVisible] = useState(true);
       const [routeMode, setRouteMode] = useState('driving');
-
-    
+      const [isMarkerLimitReached, setIsMarkerLimitReached] = useState(false);
+      const [showAlert, setShowAlert] = useState(false);
+      const markerLimit = 6;
+     
     const mapProvider = (currentMap) => {
         setMap(currentMap)
     }
@@ -37,9 +39,14 @@ export const MapContextProvider = (props) => {
             isSideBarVisible,
             setIsSideBarVisible,
             routeMode,
-            setRouteMode 
+            setRouteMode,
+            markerLimit,
+            isMarkerLimitReached,
+            setIsMarkerLimitReached,
+            showAlert,
+            setShowAlert 
             }}>
-        {props.children}
+          {props.children}
         </MapContext.Provider>;
 }
 export default function useMapContext() {

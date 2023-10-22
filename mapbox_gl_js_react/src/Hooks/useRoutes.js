@@ -2,6 +2,7 @@ import { useEffect} from 'react';
 import useMapContext from '../Context/useMapContext';
 import { fetchRoute } from '../FetchUtils/fetchUtils';
 
+// Get the coordinates of markers
 const getCoordinates = (markers) => markers.map((marker) => `${marker.lng},${marker.lat}`).join(";");
 
 const addRouteToMap = (map, coordinates,routeLayerId, color, lineWidth) => {
@@ -35,11 +36,11 @@ const addRouteToMap = (map, coordinates,routeLayerId, color, lineWidth) => {
     });
   }
 };
+
 const changeColorOfExistingRoute = (map, routeLayerId, color, lineWidth) =>{
   if (map.getLayer(routeLayerId)) {
     // Update the line color
     map.setPaintProperty(routeLayerId, 'line-color', color);
-    
     // Update the line width
     map.setPaintProperty(routeLayerId, 'line-width', Number(lineWidth));
   } else {
@@ -47,7 +48,7 @@ const changeColorOfExistingRoute = (map, routeLayerId, color, lineWidth) =>{
   }
 }
 
-const removeRouteIfOnlyOneMarker = (markers, map, routeLayerId) => {
+const removeRouteIfLessThanTwoMarker = (markers, map, routeLayerId) => {
     // Remove the route from the map if it exists
     if (map.getLayer(routeLayerId)) {
       map.removeLayer(routeLayerId);
@@ -57,6 +58,7 @@ const removeRouteIfOnlyOneMarker = (markers, map, routeLayerId) => {
     }
 };
 
+// Calculate route distance and duration
 const calculateRouteInfo = (routeData) => {
     let routeDistance = 0;
     let routeDuration = 0;
@@ -81,23 +83,20 @@ export default function useRoutes() {
     routeMode
   } = useMapContext();
   const routeLayerId = 'route';
-
-
+ 
   useEffect(() => {
     if (markersObj.length >= 2) {
-      
       const updateRoute = async () => {
         const coordinates = getCoordinates(markersObj);
         const routeCoordinates = await fetchRoute(routeMode,coordinates);
         addRouteToMap(map, routeCoordinates.geometry.coordinates,routeLayerId, color, lineWidth);
         changeColorOfExistingRoute(map, routeLayerId, color, lineWidth)
-        
         setRouteInfo(calculateRouteInfo(routeCoordinates.legs))
         setRouteCoord(routeCoordinates);
       };
       updateRoute();
     }else if(markersObj.length < 2 && markersObj.length > 0){
-      removeRouteIfOnlyOneMarker(markersObj, map, routeLayerId);
+      removeRouteIfLessThanTwoMarker(markersObj, map, routeLayerId);
       setRouteInfo({
         distance: null,
         duration: null,
@@ -105,6 +104,5 @@ export default function useRoutes() {
     }
   }, [markersObj, color, lineWidth, routeMode]);
   
-
   return { routeInfo, routeCoord };
 }

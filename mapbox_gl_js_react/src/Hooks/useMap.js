@@ -4,16 +4,23 @@ import useRoutes from '../Hooks/useRoutes';
 import { useMarkers } from '../Hooks/useMarkers';
 import useMapContext from '../Context/useMapContext';
 mapboxgl.accessToken = process.env.REACT_APP_ACCESS_TOKEN;
-export default function useMap(){
-    const mapContainer = useRef(null);
-    const map = useRef(null);
-    // Initial coordinates of Veszprém
-    const [lng, setLng] = useState(17.9156);
-    const [lat, setLat] = useState(47.0934);
-    const [zoom, setZoom] = useState(12);
-    const { mapProvider} = useMapContext(); 
-    useRoutes();
-    const {  createMarker } = useMarkers();
+
+export default function useMap() {
+  const mapContainer = useRef(null);
+  const map = useRef(null);
+  const isMarkerLimitReachedRef = useRef(false);
+  // Initial coordinates of Veszprém
+  const [lng, setLng] = useState(17.9156);
+  const [lat, setLat] = useState(47.0934);
+  const [zoom, setZoom] = useState(12);
+  const { mapProvider, isMarkerLimitReached, setShowAlert } = useMapContext();
+  const {createMarker} = useMarkers()
+  useRoutes();
+
+  // Update the ref when the state variable changes
+  useEffect(() => {
+    isMarkerLimitReachedRef.current = isMarkerLimitReached;
+  }, [isMarkerLimitReached]);
 
   useEffect(() => {
     if (map.current) return; // Initialize the map only once
@@ -39,15 +46,19 @@ export default function useMap(){
     };
   }, []);
 
-  const handleMapClick = useCallback((e) => {
+const handleMapClick = useCallback((e) => {
     const clickedLngLat = [e.lngLat.lng, e.lngLat.lat];
-    createMarker(map.current, clickedLngLat);
+    if (!isMarkerLimitReachedRef.current) {
+      createMarker(map.current, clickedLngLat);
+    } else {
+      setShowAlert(true);
+    }
   }, []);
 
-  return{
+  return {
     lng,
     lat,
     zoom,
-    mapContainer
-  }
+    mapContainer,
+  };
 }
