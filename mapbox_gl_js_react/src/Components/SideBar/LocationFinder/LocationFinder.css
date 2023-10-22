@@ -44,7 +44,7 @@
     cursor: pointer;
     transition: background-color 0.3s;
     border-bottom: 1px solid #ccc;
-    max-width: 200px; /* Set your desired maximum width */
+    max-width: 200px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -63,7 +63,7 @@
     color: #fff;
     padding: 5px;
     border-radius: 4px;
-    white-space: normal; /* Allow text from wrapping */
+    white-space: normal; /* Allow text wrapping */
     visibility: hidden;
     opacity: 0;
     transition: opacity 0.3s;

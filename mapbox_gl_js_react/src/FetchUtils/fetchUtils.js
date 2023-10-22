@@ -18,7 +18,7 @@ export const fetchRoute = async (mode, coordinates) => {
     }
   };
 
- //Get locations by searching them by text inputs
+ // Get locations by searching them by text inputs
  export const fetchLocations = async (searchQuery) => {
     try {
       const response = await fetch(
@@ -39,7 +39,7 @@ export const fetchRoute = async (mode, coordinates) => {
     }
   };
   
-  //Get the name of the locations of markers
+  // Get the name of the locations of markers
   export const fetchLocationsName = async (markers) => {
       let locations = [];
       for(let i =0; i < markers.length; i++){

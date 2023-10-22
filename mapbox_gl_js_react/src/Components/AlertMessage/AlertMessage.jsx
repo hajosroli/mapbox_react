@@ -1,9 +1,8 @@
 import React from 'react';
-import './AlertMessage.css'; // Import your CSS file for styling
+import './AlertMessage.css';
 
 function AlertMessage({ setShowAlert }) {
 
-    
   return (
     <div className="custom-alert">
       <div className="custom-alert__content">

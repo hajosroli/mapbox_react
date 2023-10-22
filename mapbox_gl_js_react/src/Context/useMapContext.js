@@ -46,7 +46,7 @@ export const MapContextProvider = (props) => {
             showAlert,
             setShowAlert 
             }}>
-        {props.children}
+          {props.children}
         </MapContext.Provider>;
 }
 export default function useMapContext() {

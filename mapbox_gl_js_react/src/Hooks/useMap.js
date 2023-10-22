@@ -4,10 +4,11 @@ import useRoutes from '../Hooks/useRoutes';
 import { useMarkers } from '../Hooks/useMarkers';
 import useMapContext from '../Context/useMapContext';
 mapboxgl.accessToken = process.env.REACT_APP_ACCESS_TOKEN;
+
 export default function useMap() {
   const mapContainer = useRef(null);
   const map = useRef(null);
-  const isMarkerLimitReachedRef = useRef(false); // Create a ref for isMarkerLimitReached
+  const isMarkerLimitReachedRef = useRef(false);
   // Initial coordinates of Veszprém
   const [lng, setLng] = useState(17.9156);
   const [lat, setLat] = useState(47.0934);

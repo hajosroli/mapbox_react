@@ -1,5 +1,6 @@
 import useSearchingInput from "../../../Hooks/useSearchingInput"
 import "./SearchResults.css"
+
 export default function SearchResults(){
   const {locationNames} = useSearchingInput();
 

@@ -20,6 +20,5 @@ export default function SideBar() {
         <SearchResults/>
         <RouteStyler/>
       </div>
-    );
-    
+    ); 
   }
