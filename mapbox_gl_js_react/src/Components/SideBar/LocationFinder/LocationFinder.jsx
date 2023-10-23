@@ -1,3 +1,4 @@
+import { Button } from "react-bootstrap";
 import useSearchingInput from "../../../Hooks/useSearchingInput";
 import "./LocationFinder.css"
 
@@ -36,15 +37,12 @@ export default function LocationFinder(){
               ))}
             </div>
           ) : null}
-          {selectedLocation ? (
-            <button onClick={handleSearch} className="location-search__button">
+            <Button 
+              onClick={handleSearch}
+              className="location-search__button"
+              disabled={selectedLocation === null}>
               Search
-            </button>
-          ) : (
-            <button disabled className="location-search__button location-search__button--disabled">
-              Search
-            </button>
-          )}
+            </Button>
         </div>
       </div>
     );  

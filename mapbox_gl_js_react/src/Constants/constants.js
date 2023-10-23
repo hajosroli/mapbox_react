@@ -1,5 +1,6 @@
 const token = process.env.REACT_APP_ACCESS_TOKEN;
 
+// Coordinates of Veszprém
 const LNG_VESZPREM = 17.9156;
 const LAT_VESZPREM = 47.0934;
 

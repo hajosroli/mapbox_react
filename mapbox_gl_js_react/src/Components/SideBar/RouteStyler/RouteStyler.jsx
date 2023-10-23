@@ -1,11 +1,11 @@
-import useMapContext from "../../../Context/useMapContext";
+import useRouteContext from "../../../Context/useRouteContext";
 import "./RouteStyler.css"
 export default function RouteStyler(){
     const{
         color, 
         setColor, 
         lineWidth, 
-        setLineWidth } = useMapContext();
+        setLineWidth } = useRouteContext();
         
         return (
           <div className="styling-container">
