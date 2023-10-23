@@ -44,7 +44,7 @@ export function useMarkers() {
         setIsMarkerLimitReached(false);
       }
     };
-    
+
     useEffect(() => {
       // Ensure the initial state of isMarkerLimitReached is correct
       checkMarkerLimit();
