@@ -48,14 +48,22 @@ const changeColorOfExistingRoute = (map, routeLayerId, color, lineWidth) =>{
   }
 }
 
-const removeRouteIfLessThanTwoMarker = (markers, map, routeLayerId) => {
-    // Remove the route from the map if it exists
-    if (map.getLayer(routeLayerId)) {
-      map.removeLayer(routeLayerId);
-    }
-    if (map.getSource('route')) {
-      map.removeSource('route');
-    }
+// Remove routes for using if ther is less than two markers
+const removeRoutes = (map, routeLayerId) => {
+  if (map && map.getStyle) {
+    // Remove any potential layers that start with 'route'
+    map.getStyle().layers.forEach(function (layer) {
+      if (layer.id.startsWith(routeLayerId)) {
+        map.removeLayer(layer.id);
+      }
+    });
+    // Remove any potential sources that start with 'route'
+    Object.keys(map.getStyle().sources).forEach(function (sourceId) {
+      if (sourceId.startsWith(routeLayerId)) {
+        map.removeSource(sourceId);
+      }
+    });
+  }
 };
 
 // Calculate route distance and duration
@@ -95,8 +103,8 @@ export default function useRoutes() {
         setRouteCoord(routeCoordinates);
       };
       updateRoute();
-    }else if(markersObj.length < 2 && markersObj.length > 0){
-      removeRouteIfLessThanTwoMarker(markersObj, map, routeLayerId);
+    }else if(markersObj.length < 2){
+      removeRoutes(map, routeLayerId)
       setRouteInfo({
         distance: null,
         duration: null,

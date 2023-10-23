@@ -16,7 +16,7 @@ export default function RouteInfoProvider(){
 
     return (
       <div className="route-info">
-        <h1 className="route-info__header">Route Information</h1>
+        <h1 className="route-info__header">Route Information:</h1>
         <table className="route-info__table">
           <tbody>
             <tr className="route-info__row">
