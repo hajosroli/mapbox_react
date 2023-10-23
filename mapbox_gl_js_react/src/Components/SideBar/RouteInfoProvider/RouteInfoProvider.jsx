@@ -1,8 +1,8 @@
-import useMapContext from "../../../Context/useMapContext";
+import useRouteContext from "../../../Context/useRouteContext";
 import "./RouteInfoProvider.css"
 
 export default function RouteInfoProvider(){
-    const {routeInfo} = useMapContext();
+    const {routeInfo} = useRouteContext();
 
     const formattedDuration = () => {
         const hours = Math.floor(routeInfo.duration / 60);

@@ -1,10 +1,10 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCar, faWalking, faBicycle } from '@fortawesome/free-solid-svg-icons';
-import useMapContext from '../../../Context/useMapContext';
 import "./RouteModeSelector.css"
+import useRouteContext from '../../../Context/useRouteContext';
 
 export const RouteModeSelector = () => {
-    const {setRouteMode} = useMapContext()
+    const {setRouteMode} = useRouteContext();
     
     return (
         <div>

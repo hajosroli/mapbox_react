@@ -1,6 +1,7 @@
 import { useEffect} from 'react';
 import useMapContext from '../Context/useMapContext';
 import { fetchRoute } from '../FetchUtils/fetchUtils';
+import useRouteContext from '../Context/useRouteContext';
 
 // Get the coordinates of markers
 const getCoordinates = (markers) => markers.map((marker) => `${marker.lng},${marker.lat}`).join(";");
@@ -79,19 +80,11 @@ const calculateRouteInfo = (routeData) => {
 }
 
 export default function useRoutes() {
-  const {
-    routeCoord, 
-    setRouteCoord, 
-    routeInfo, 
-    setRouteInfo,
-    markersObj,
-    map,
-    color,
-    lineWidth,
-    routeMode,
-    setErrorMessage,
-    setShowAlert
-  } = useMapContext();
+  const {markersObj, map, setErrorMessage, setShowAlert
+    } = useMapContext();
+
+  const {routeCoord, setRouteCoord, routeInfo, setRouteInfo,color,lineWidth,routeMode
+    } = useRouteContext();
   const routeLayerId = 'route';
 
   // Get route between markers if there is any
