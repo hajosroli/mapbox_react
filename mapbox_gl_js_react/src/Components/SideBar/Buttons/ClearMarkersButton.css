@@ -1,0 +1,9 @@
+.remove-button {
+    background-color: #292a2a;
+    color: #7a7777;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+} 

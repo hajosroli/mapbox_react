@@ -14,8 +14,7 @@
 }
 .button-container {
   display: flex;
-  justify-content: flex-end; 
-  align-items: center; 
+  justify-content: space-between; 
   width: 95%;
 }
 

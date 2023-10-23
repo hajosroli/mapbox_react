@@ -1,7 +1,7 @@
 import React from 'react';
 import "./Map.css"
 import useMap from '../../Hooks/useMap';
-import { ShowSideBarButton } from '../SideBar/ShowSideBarButton/ShowSideBarButton';
+import { ShowSideBarButton } from '../SideBar/Buttons/ShowSideBarButton';
 import { InfoBox } from '../InfoBox/InfoBox';
 import useMapContext from '../../Context/useMapContext';
 import AlertMessage from '../AlertMessage/AlertMessage';

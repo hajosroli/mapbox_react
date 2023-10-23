@@ -9,7 +9,7 @@ export default function RouteStyler(){
         
         return (
           <div className="styling-container">
-            <h1 className="styling-header">Edit Route Style</h1>
+            <h1 className="styling-header">Edit Route Style:</h1>
             <div className="input-label-group">
               <label className="input-label input-label--color" htmlFor="color-picker">
                 <p> Color:</p>

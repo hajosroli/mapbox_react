@@ -12,11 +12,11 @@ export default function LocationFinder(){
 
     return (
       <div className="location-search-container">
-        <h1 className="location-search__title">Find Location</h1>
+        <h1 className="location-search__title">Find Location:</h1>
         <div className="location-search">
           <input
             type="text"
-            placeholder="Find a location"
+            placeholder="Search for location"
             value={setInputValue()}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="location-search__input"
