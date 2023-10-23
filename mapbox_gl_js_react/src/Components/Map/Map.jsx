@@ -8,13 +8,16 @@ import AlertMessage from '../AlertMessage/AlertMessage';
 
 export default function Map({isSideBarVisible}) {
   const {lng, lat, zoom, mapContainer} = useMap()
-  const {showAlert, setShowAlert} = useMapContext()
+  const {showAlert, setShowAlert, errorMessage} = useMapContext()
 
   return (
     <div>
       {!isSideBarVisible ? <ShowSideBarButton/> : null }
       <InfoBox lng={lng} lat={lat} zoom={zoom}/>
-      {showAlert ? <AlertMessage setShowAlert={setShowAlert}/> : null}
+      {showAlert ? 
+      <AlertMessage 
+      setShowAlert={setShowAlert} 
+      errorMessage={errorMessage}/> : null}
       <div ref={mapContainer} className="map-container" />
     </div>
   );

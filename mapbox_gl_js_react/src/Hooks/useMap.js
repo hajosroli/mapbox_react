@@ -13,9 +13,13 @@ export default function useMap() {
   const [lng, setLng] = useState(17.9156);
   const [lat, setLat] = useState(47.0934);
   const [zoom, setZoom] = useState(12);
-  const { mapProvider, isMarkerLimitReached, setShowAlert } = useMapContext();
-  const {createMarker} = useMarkers()
+  const {createMarker} = useMarkers();
   useRoutes();
+  const { 
+    mapProvider,
+    isMarkerLimitReached, 
+    setShowAlert, 
+    setErrorMessage } = useMapContext();
 
   // Update the ref when the state variable changes
   useEffect(() => {
@@ -51,6 +55,7 @@ const handleMapClick = useCallback((e) => {
     if (!isMarkerLimitReachedRef.current) {
       createMarker(map.current, clickedLngLat);
     } else {
+      setErrorMessage('Maximum Limit of placed Markers is reached!');
       setShowAlert(true);
     }
   }, []);
