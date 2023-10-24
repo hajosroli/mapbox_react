@@ -12,6 +12,7 @@ This is a web application built using Mapbox GL JS that displays a map centered 
 - Show route endpoints(start, via, end (tooltips on hover))
 - Search for locations and add markers using address or location search with autofill suggestions.
 - Customize route appearance.
+- Alerts(reached marker limit; no route between markers using ground transportation)
 
 ## Technologies Used
 - [Mapbox GL JS]: A JavaScript library for interactive, customizable maps.
