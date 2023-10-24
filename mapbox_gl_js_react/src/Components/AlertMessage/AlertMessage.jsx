@@ -1,7 +1,7 @@
 import React from 'react';
 import './AlertMessage.css';
 
-function AlertMessage({ setShowAlert, errorMessage }) {
+export default function AlertMessage({ setShowAlert, errorMessage }) {
 
   return (
     <div className="custom-alert">
@@ -12,5 +12,3 @@ function AlertMessage({ setShowAlert, errorMessage }) {
     </div>
   );
 }
-
-export default AlertMessage;

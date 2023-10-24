@@ -3,7 +3,7 @@ import { useMarkers } from '../../../Hooks/useMarkers';
 import useMapContext from '../../../Context/useMapContext';
 import './ClearMarkersButton.css'
 
-export const ClearMarkersButton = () => {
+export default function ClearMarkersButton(){
     const { removeAllMarkers} = useMarkers();
     const {markersObj} = useMapContext();
 

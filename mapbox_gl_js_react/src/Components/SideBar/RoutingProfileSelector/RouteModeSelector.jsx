@@ -3,7 +3,7 @@ import { faCar, faWalking, faBicycle } from '@fortawesome/free-solid-svg-icons';
 import "./RouteModeSelector.css"
 import useRouteContext from '../../../Context/useRouteContext';
 
-export const RouteModeSelector = () => {
+export default function RouteModeSelector(){
     const {setRouteMode} = useRouteContext();
     
     return (
