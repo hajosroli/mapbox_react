@@ -15,6 +15,7 @@ This is a web application built using Mapbox GL JS that displays a map centered 
 - Alerts(reached marker limit; no route between markers using ground transportation)
 
 ## Technologies Used
+- [React]: A JavaScript library for building user interfaces.
 - [Mapbox GL JS]: A JavaScript library for interactive, customizable maps.
 - [Mapbox Directions API]: Used for route planning.
 - [Font Awesome]: Used for icons.
