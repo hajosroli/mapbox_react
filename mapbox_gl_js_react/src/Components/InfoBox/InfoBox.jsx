@@ -1,6 +1,6 @@
 import "./InfoBox.css";
 
-export const InfoBox = ({lng, lat, zoom}) => {
+export default function InfoBox({lng, lat, zoom}){
     
     return(
         <div className="info-box">

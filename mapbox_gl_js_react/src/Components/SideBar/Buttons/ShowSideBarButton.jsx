@@ -1,7 +1,8 @@
 import {Button} from 'react-bootstrap';
 import useMapContext from '../../../Context/useMapContext';
 import './ShowSideBarButton.css'
-export const ShowSideBarButton = () => {
+
+export default function ShowSideBarButton(){
     const {isSideBarVisible, setIsSideBarVisible} = useMapContext();
 
     return(
@@ -10,6 +11,5 @@ export const ShowSideBarButton = () => {
                 {isSideBarVisible ? "Hide" : "Show"} Sidebar
             </Button>
         </div>
-
     )
 }

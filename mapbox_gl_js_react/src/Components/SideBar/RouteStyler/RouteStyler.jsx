@@ -1,5 +1,6 @@
 import useRouteContext from "../../../Context/useRouteContext";
 import "./RouteStyler.css"
+
 export default function RouteStyler(){
     const{
         color, 
