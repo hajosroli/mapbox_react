@@ -6,7 +6,7 @@
   }
   
 .fa-icon {
-    font-size: 24px; 
+    font-size: 20px; 
     cursor: pointer; 
     margin: 0 10px; 
     padding: 10px; 
@@ -24,4 +24,14 @@
     background-color: #8a8585; 
     color: #fff;
   }
+
+.fa-icon__walking {
+    padding-left: 17px;
+    padding-right: 17px;
+}
+
+.fa-icon__driving {
+    padding-left: 13px;
+    padding-right: 13px;
+}
   

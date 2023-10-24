@@ -11,11 +11,11 @@ export default function RouteModeSelector(){
             <h1>Choose Mode:</h1>
             <div className="mode-icons">
                 <FontAwesomeIcon 
-                className='fa-icon' 
+                className='fa-icon fa-icon__driving' 
                 icon={faCar} 
                 onClick={() => setRouteMode('driving')} />
                 <FontAwesomeIcon 
-                className='fa-icon' 
+                className='fa-icon fa-icon__walking'  
                 icon={faWalking} 
                 onClick={() => setRouteMode('walking')} />
                 <FontAwesomeIcon 
