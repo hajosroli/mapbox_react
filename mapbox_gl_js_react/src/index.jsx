@@ -6,10 +6,12 @@ import App from './App';
 import { MapContextProvider } from "./Context/useMapContext";
 
 ReactDOM.render(
-  <MapContextProvider>
+  <>
   <React.StrictMode>
-    <App />
+    <MapContextProvider>
+      <App />
+    </MapContextProvider>
   </React.StrictMode>
-  </MapContextProvider>,
+  </>, 
   document.getElementById('root')
 );
